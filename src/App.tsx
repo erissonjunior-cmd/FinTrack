@@ -983,53 +983,53 @@ export default function App() {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="space-y-4">
+            <div className="flex flex-col md:flex-row gap-8">
+              <div className="flex-1 space-y-6 min-w-0">
                 <div className="space-y-1">
                   <p className="text-xs text-white/40 uppercase tracking-wider font-semibold">Renda Mensal</p>
-                  <p className="text-2xl font-bold text-white">
+                  <p className="text-2xl font-bold text-white truncate">
                     {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(profile?.monthly_income || 0)}
                   </p>
                 </div>
                 
-                <div className="grid grid-cols-1 gap-2 pt-2 border-t border-white/5">
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="text-white/40">Meus Gastos:</span>
-                    <span className="font-medium text-white/80">
+                <div className="space-y-3 pt-4 border-t border-white/5">
+                  <div className="flex justify-between items-center gap-4">
+                    <span className="text-xs text-white/40 whitespace-nowrap">Meus Gastos:</span>
+                    <span className="text-sm font-bold text-white/80 whitespace-nowrap">
                       {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(stats.mineTotal)}
                     </span>
                   </div>
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="text-white/40">Compartilhados:</span>
-                    <span className="font-medium text-indigo-400">
+                  <div className="flex justify-between items-center gap-4">
+                    <span className="text-xs text-white/40 whitespace-nowrap">Compartilhados:</span>
+                    <span className="text-sm font-bold text-indigo-400 whitespace-nowrap">
                       {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(stats.sharedTotal)}
                     </span>
                   </div>
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="text-white/40">Gastos Fixos:</span>
-                    <span className="font-medium text-orange-400">
+                  <div className="flex justify-between items-center gap-4">
+                    <span className="text-xs text-white/40 whitespace-nowrap">Gastos Fixos:</span>
+                    <span className="text-sm font-bold text-orange-400 whitespace-nowrap">
                       {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(stats.fixedTotal)}
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="space-y-1">
+              <div className="flex-1 space-y-1 min-w-0">
                 <p className="text-xs text-white/40 uppercase tracking-wider font-semibold">Saldo Restante</p>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <p className={cn(
-                    "text-2xl font-bold",
+                    "text-2xl font-bold break-all",
                     (profile?.monthly_income || 0) - stats.total > 0 ? "text-emerald-500" : "text-red-500"
                   )}>
                     {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format((profile?.monthly_income || 0) - stats.total)}
                   </p>
                   {(profile?.monthly_income || 0) - stats.total > 0 ? (
-                    <ArrowUpCircle className="w-5 h-5 text-emerald-500/50" />
+                    <ArrowUpCircle className="w-5 h-5 text-emerald-500/50 flex-shrink-0" />
                   ) : (
-                    <ArrowDownCircle className="w-5 h-5 text-red-500/50" />
+                    <ArrowDownCircle className="w-5 h-5 text-red-500/50 flex-shrink-0" />
                   )}
                 </div>
-                <p className="text-[10px] text-white/20 mt-1 italic">
+                <p className="text-[10px] text-white/20 mt-1 italic leading-tight">
                   * Inclui gastos parcelados, compartilhados e fixos.
                 </p>
               </div>
@@ -1171,19 +1171,19 @@ export default function App() {
                     layout
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="glass-card p-6 flex items-center justify-between group"
+                    className="glass-card p-6 flex flex-col sm:flex-row sm:items-center justify-between group gap-4"
                   >
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-orange-500/10 rounded-xl flex items-center justify-center text-orange-500">
+                    <div className="flex items-center gap-4 min-w-0">
+                      <div className="w-12 h-12 bg-orange-500/10 rounded-xl flex items-center justify-center text-orange-500 flex-shrink-0">
                         <Calendar className="w-6 h-6" />
                       </div>
-                      <div>
-                        <h4 className="font-bold text-lg">{fixed.title}</h4>
+                      <div className="min-w-0 flex-1">
+                        <h4 className="font-bold text-lg truncate" title={fixed.title}>{fixed.title}</h4>
                         <p className="text-xs text-white/40">Vence todo dia {fixed.due_day}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-6">
-                      <p className="text-xl font-bold">
+                    <div className="flex items-center justify-between sm:justify-end gap-6">
+                      <p className="text-xl font-bold truncate">
                         {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(fixed.amount)}
                       </p>
                       <div className="flex items-center gap-2">
@@ -1753,13 +1753,13 @@ export default function App() {
 
 function StatCard({ label, value, icon, color }: { label: string, value: number, icon: React.ReactNode, color: string }) {
   return (
-    <div className="glass-card p-6 flex items-center gap-4">
-      <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center bg-white/5", color)}>
+    <div className="glass-card p-6 flex items-center gap-4 min-w-0">
+      <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 flex-shrink-0", color)}>
         {icon}
       </div>
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-wider text-white/40">{label}</p>
-        <p className="text-2xl font-bold">
+      <div className="min-w-0 flex-1">
+        <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-white/40 truncate">{label}</p>
+        <p className="text-lg sm:text-2xl font-bold truncate" title={new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value)}>
           {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value)}
         </p>
       </div>
@@ -1796,47 +1796,47 @@ const DebtItem: React.FC<{
       )}
     >
       <div 
-        className="p-6 flex items-center justify-between cursor-pointer group"
+        className="p-6 flex flex-col sm:flex-row sm:items-center justify-between cursor-pointer group gap-4"
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 min-w-0">
           <div className={cn(
-            "w-12 h-12 rounded-xl flex items-center justify-center",
+            "w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0",
             debt.isShared ? "bg-indigo-500/10 text-indigo-500" :
             debt.category === 'installment' ? "bg-blue-500/10 text-blue-500" : "bg-purple-500/10 text-purple-500"
           )}>
             {debt.isShared ? <Users className="w-6 h-6" /> :
              debt.category === 'installment' ? <CreditCard className="w-6 h-6" /> : <Users className="w-6 h-6" />}
           </div>
-          <div>
-            <div className="flex items-center gap-2">
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-2 flex-wrap">
               <h4 className={cn(
-                "font-bold text-lg transition-colors",
+                "font-bold text-lg transition-colors truncate",
                 debt.isShared ? "group-hover:text-indigo-400" : "group-hover:text-emerald-400"
-              )}>{debt.title}</h4>
+              )} title={debt.title}>{debt.title}</h4>
               {debt.isShared && (
-                <span className="text-[10px] font-bold uppercase tracking-wider bg-indigo-500/10 text-indigo-400 px-2 py-0.5 rounded-md">
+                <span className="text-[10px] font-bold uppercase tracking-wider bg-indigo-500/10 text-indigo-400 px-2 py-0.5 rounded-md whitespace-nowrap">
                   Compartilhado
                 </span>
               )}
             </div>
-            <div className="flex items-center gap-3 text-xs text-white/40">
-              <span className="flex items-center gap-1">
+            <div className="flex items-center gap-3 text-xs text-white/40 flex-wrap">
+              <span className="flex items-center gap-1 whitespace-nowrap">
                 <Calendar className="w-3 h-3" />
                 {format(parseISO(debt.created_at), "dd MMM yyyy", { locale: ptBR })}
               </span>
               {debt.person_name && (
-                <span className="flex items-center gap-1">
-                  <Users className="w-3 h-3" />
+                <span className="flex items-center gap-1 truncate max-w-[120px]">
+                  <Users className="w-3 h-3 flex-shrink-0" />
                   {debt.person_name}
                 </span>
               )}
-              <span className="bg-white/5 px-2 py-0.5 rounded-full">
+              <span className="bg-white/5 px-2 py-0.5 rounded-full whitespace-nowrap">
                 {paidCount}/{totalCount} parcelas pagas
               </span>
               {associatedCard && (
-                <div className="flex items-center gap-1.5 px-2 py-0.5 bg-white/10 rounded-full">
-                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: associatedCard.color }} />
+                <div className="flex items-center gap-1.5 px-2 py-0.5 bg-white/10 rounded-full whitespace-nowrap">
+                  <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: associatedCard.color }} />
                   <span className="text-[10px] font-medium text-white/60">{associatedCard.name}</span>
                 </div>
               )}
@@ -1844,9 +1844,9 @@ const DebtItem: React.FC<{
           </div>
         </div>
 
-        <div className="flex items-center gap-6">
-          <div className="text-right">
-            <p className="text-xl font-bold">
+        <div className="flex items-center justify-between sm:justify-end gap-6">
+          <div className="text-right min-w-0">
+            <p className="text-xl font-bold truncate">
               {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(debt.total_amount)}
             </p>
             <p className="text-xs text-white/40">Total</p>
